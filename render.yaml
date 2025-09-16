@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: riego
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: DATABASE_URL
+        value: mysql://if0_37758081:tAt3eBvaNwVzFVJ@sql306.infinityfree.com:3306/if0_37758081_sistema_riego

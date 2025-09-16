@@ -1,0 +1,254 @@
+/* Estilo base */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #002B28; /* Verde oscuro */
+    color: #E3F4F1; /* Verde claro */
+    margin: 0;
+    padding: 0;
+}
+/* Estilo para contenedores */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background-color: #1A4D4A; /* Fondo de los contenidos */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones */
+.btn {
+    background-color: #20B2AA; /* Verde agua */
+    color: #002B28; /* Contraste */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.btn:hover {
+    background-color: #17A199;
+    color: #E3F4F1;
+}
+
+/* Cabecera y pie de página */
+.header, .footer {
+    background-color: #004942; /* Verde intermedio */
+    color: #E3F4F1;
+    text-align: center;
+    padding: 10px 0;
+}
+/* Header */
+header {
+    background-color: #004d40; /* Verde oscuro */
+    color: #e0f2f1; /* Verde claro */
+    padding: 10px 20px;
+}
+
+header img {
+    border-radius: 50%;
+    border: 2px solid #e0f2f1;
+}
+
+header nav .nav-link {
+    color: #e0f2f1;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+header nav .nav-link:hover {
+    color: #80cbc4;
+}
+
+/* Footer */
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #333; /* Color de fondo del footer */
+    color: #fff; /* Color del texto en el footer */
+    padding: 10px 0;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Tarjetas HMI */
+.card {
+    background-color: #2C6E68; /* Verde hoja */
+    color: #E3F4F1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    margin: 15px 0;
+}
+
+/* Tablas */
+.table {
+    background-color: #1A4D4A;
+    color: #E3F4F1;
+}
+
+.table thead {
+    background-color: #004942;
+}
+/* Estilos adicionales */
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: #e0f2f1 !important; /* Color de los enlaces */
+    margin-right: 15px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #80cbc4 !important;
+}
+/* Estilo para el modal */
+.modal-content {
+    background-color: #2e7d32; /* Color verde de fondo */
+    color: #ffffff; /* Texto blanco para contraste */
+    border-radius: 8px;
+    border: none;
+}
+
+/* Estilo para los inputs dentro del modal */
+.modal-content .form-control {
+    background-color: #388e3c; /* Verde más claro para campos de texto */
+    color: #ffffff; /* Texto blanco */
+    border: 1px solid #1b5e20; /* Borde verde oscuro */
+    border-radius: 5px;
+}
+
+.modal-content .form-control:focus {
+    background-color: #4caf50; /* Verde más vivo al enfocar */
+    border-color: #66bb6a;
+    box-shadow: 0 0 5px #66bb6a;
+}
+
+/* Botones dentro del modal */
+.modal-content .btn-warning {
+    background-color: #ffc107; /* Naranja para destacar */
+    border: none;
+    color: #212121; /* Texto oscuro */
+    transition: background-color 0.3s ease;
+}
+
+.modal-content .btn-warning:hover {
+    background-color: #ffb300; /* Más oscuro al pasar el mouse */
+    color: #ffffff;
+}
+
+/* Estilo para el título del modal */
+.modal-header {
+    background-color: #1b5e20; /* Verde oscuro */
+    color: #ffffff;
+    border-bottom: none;
+}
+
+/* Estilo del botón de cerrar */
+.modal-header .btn-close {
+    filter: invert(1); /* Cambiar el color del ícono de cerrar a blanco */
+}
+
+/* Espaciado interno del formulario */
+.modal-body form {
+    padding: 10px;
+}
+.circle-progress {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+.circle-progress::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background-color: #1A4D4A;
+    border-radius: 50%;
+    z-index: 1;
+}
+.circle-progress .value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.circle-progress .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #28a745;
+    z-index: 0;
+    transition: height 0.5s ease;
+}
+ /* Círculo de progreso */
+.progress-circle {
+    width: 120px;
+    height: 120px;
+    background: conic-gradient(#28a745 0% 50%, #dc3545 50% 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor principal */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+/* Sección de control */
+.control-container {
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.botones-control button {
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Estilo del encabezado */
+.h1-container {
+    margin-bottom: 30px;
+}
+
+/* Asegura que la interfaz sea responsiva */
+@media (max-width: 767px) {
+    .progress-circle {
+        width: 100px;
+        height: 100px;
+        font-size: 18px;
+    }
+
+    .control-container {
+        padding: 15px;
+    }
+
+    .botones-control button {
+        font-size: 14px;
+    }
+}

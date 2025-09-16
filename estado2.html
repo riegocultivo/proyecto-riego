@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Bomba</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            background-color: #4CAF50; /* Verde */
+            border: none;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Control de Bomba</h1>
+    <button onclick="enviarComando('ACTIVAR')">Activar Bomba</button>
+    <button onclick="enviarComando('DESACTIVAR')">Desactivar Bomba</button>
+
+    <script>
+        // Función para enviar el comando al servidor
+        function enviarComando(comando) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'obtener_comando.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('Comando enviado: ' + comando);
+                }
+            };
+            xhr.send('comando=' + comando);
+        }
+    </script>
+
+</body>
+</html>
