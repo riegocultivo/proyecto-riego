@@ -6,6 +6,7 @@ $DB_NAME = 'riego_chz9';  // El nombre de tu base de datos
 
 try {
     // Usamos PDO para conectar con PostgreSQL
+    // Usamos PDO para conectar con PostgreSQL
     $conn = new PDO("pgsql:host=$DB_HOST;dbname=$DB_NAME", $DB_USER, $DB_PASS);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->exec("SET TIME ZONE 'America/Lima';");
