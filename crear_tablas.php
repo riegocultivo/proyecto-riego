@@ -1,16 +1,28 @@
 <?php
-// Conexión a la base de datos PostgreSQL
-$host = 'dpg-d62i4tonputs73b47f60-a';
-$dbname = 'riego2';
-$user = 'riego2';
-$password = 'BilCdLcvjH59YKLlGMccY4NTlDeU8FI8';
-$port = "5432";
+// Conexión a PostgreSQL (Render recomienda usar DATABASE_URL)
+$databaseUrl = getenv('DATABASE_URL');
 
 try {
+    if ($databaseUrl) {
+        $db = parse_url($databaseUrl);
+        $host = $db['host'] ?? 'localhost';
+        $port = $db['port'] ?? 5432;
+        $dbname = ltrim($db['path'] ?? '', '/');
+        $user = $db['user'] ?? '';
+        $password = $db['pass'] ?? '';
+    } else {
+        // Fallback local (si ejecutas en tu PC). Ajusta estos valores si lo necesitas.
+        $host = 'dpg-d62i4tonputs73b47f60-a';
+        $port = 5432;
+        $dbname = 'riego2';
+        $user = 'riego2';
+        $password = 'BilCdLcvjH59YKLlGMccY4NTlDeU8FI8';
+    }
+
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Crear tabla `lecturas`
+// Crear tabla `lecturas`
     $sql_lecturas = "
     CREATE TABLE IF NOT EXISTS lecturas (
         id SERIAL PRIMARY KEY,
@@ -25,7 +37,7 @@ try {
     $sql_usuarios = "
     CREATE TABLE IF NOT EXISTS usuarios (
         id SERIAL PRIMARY KEY,
-        nombre_usuario VARCHAR(255) NOT NULL,
+        nombre_usuario VARCHAR(255) UNIQUE NOT NULL,
         contraseña VARCHAR(255) NOT NULL,
         rol VARCHAR(10) DEFAULT 'user',
         creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
@@ -37,10 +49,66 @@ try {
     INSERT INTO usuarios (nombre_usuario, contraseña, rol, creado_en) VALUES
     ('admin', 'admin', 'admin', '2024-11-18 13:57:16'),
     ('user', 'user', 'user', '2024-11-18 13:57:16')
-    ON CONFLICT DO NOTHING;";
+    ON CONFLICT (nombre_usuario) DO NOTHING;";
     $pdo->exec($sql_insert_usuarios);
 
-    echo "Tablas creadas e inicializadas correctamente.<br>";
+    
+// ====== TABLAS NUEVAS (estructura relacional, sin romper el sistema actual) ======
+$sql_roles = "
+CREATE TABLE IF NOT EXISTS roles (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);";
+$pdo->exec($sql_roles);
+
+$sql_zonas = "
+CREATE TABLE IF NOT EXISTS zonas (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT
+);";
+$pdo->exec($sql_zonas);
+
+$sql_sensores = "
+CREATE TABLE IF NOT EXISTS sensores (
+    id SERIAL PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL,
+    ubicacion VARCHAR(100),
+    zona_id INT REFERENCES zonas(id)
+);";
+$pdo->exec($sql_sensores);
+
+$sql_bombas = "
+CREATE TABLE IF NOT EXISTS bombas (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    estado BOOLEAN DEFAULT FALSE,
+    zona_id INT REFERENCES zonas(id)
+);";
+$pdo->exec($sql_bombas);
+
+$sql_cultivos = "
+CREATE TABLE IF NOT EXISTS cultivos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50),
+    humedad_minima INT,
+    humedad_maxima INT,
+    zona_id INT REFERENCES zonas(id)
+);";
+$pdo->exec($sql_cultivos);
+
+$sql_riegos = "
+CREATE TABLE IF NOT EXISTS riegos (
+    id SERIAL PRIMARY KEY,
+    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_fin TIMESTAMP,
+    usuario_id INT REFERENCES usuarios(id),
+    bomba_id INT REFERENCES bombas(id)
+);";
+$pdo->exec($sql_riegos);
+
+echo "Tablas creadas e inicializadas correctamente.<br>";
 
     // Preparar la consulta SQL para insertar datos de simulación
     $sql = "INSERT INTO lecturas (temperatura, humedad_suelo, bomba_activa, fecha_hora) VALUES (:temperatura, :humedad_suelo, :bomba_activa, :fecha_hora)";
