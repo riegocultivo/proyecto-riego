@@ -1,8 +1,8 @@
 <?php
-$DB_HOST = 'dpg-d62i4tonputs73b47f60-a';  // Cambia el host según el tuyo
-$DB_USER = 'riego2';  // Tu nombre de usuario de la base de datos
-$DB_PASS = 'BilCdLcvjH59YKLlGMccY4NTlDeU8FI8';  // Tu contraseña de la base de datos
-$DB_NAME = 'riego2';  // El nombre de tu base de datos
+$DB_HOST = 'dpg-d6qo4rua2pns73a4sbo0-a';  // Cambia el host según el tuyo
+$DB_USER = 'riego_3';  // Tu nombre de usuario de la base de datos
+$DB_PASS = 'l85jgMNb8KAik0tECdnka9AcrjhGEgUH';  // Tu contraseña de la base de datos
+$DB_NAME = 'riego_3';  // El nombre de tu base de datos
 
 try {
     // Usamos PDO para conectar con PostgreSQL
