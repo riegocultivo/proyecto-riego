@@ -1,18 +1,12 @@
 <?php
-// =====================================================
-// crear_tablas.php (versión segura para Render + PostgreSQL)
-// - No rompe el sistema actual (mantiene lecturas/usuarios)
-// - Agrega tablas nuevas
-// - Arregla ON CONFLICT creando índice UNIQUE aunque la tabla ya existiera
-// - Inserta datos de simulación SOLO si lecturas está vacía
-// =====================================================
+// crear_tablas.php 
 
 // Mostrar errores (útil para debug; si quieres, luego lo desactivas)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Conexión a PostgreSQL (Render recomienda usar DATABASE_URL)
+// Conexión a PostgreSQL 
 $databaseUrl = getenv('DATABASE_URL');
 
 try {
@@ -25,21 +19,20 @@ try {
         $password = $db['pass'] ?? '';
     } else {
         // Fallback local (si ejecutas en tu PC). AJUSTA si lo necesitas.   
-        $host = 'dpg-d62i4tonputs73b47f60-a';
+        $host = 'dpg-d6qo4rua2pns73a4sbo0-a';
         $port = 5432;
-        $dbname = 'riego2';
-        $user = 'riego2';
-        $password = 'BilCdLcvjH59YKLlGMccY4NTlDeU8FI8';
+        $dbname = 'riego_3';
+        $user = 'riego_3';
+        $password = 'l85jgMNb8KAik0tECdnka9AcrjhGEgUH';
     }
 
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // =====================================================
-    // 1) TABLAS EXISTENTES (NO ROMPER)
-    // =====================================================
 
-    // Crear tabla `lecturas` (si no existe)
+    // 1) TABLAS lecturas//
+    
+    // Crear tabla `lecturas` 
     $sql_lecturas = "
     CREATE TABLE IF NOT EXISTS lecturas (
         id SERIAL PRIMARY KEY,
@@ -50,8 +43,7 @@ try {
     );";
     $pdo->exec($sql_lecturas);
 
-    // Crear tabla `usuarios` (si no existe)
-    // Nota: Si ya existía sin UNIQUE, este CREATE no la modifica. Por eso creamos un índice abajo.
+    // Crear tabla `usuarios` 
     $sql_usuarios = "
     CREATE TABLE IF NOT EXISTS usuarios (
         id SERIAL PRIMARY KEY,
@@ -63,7 +55,7 @@ try {
     $pdo->exec($sql_usuarios);
 
     
-    // Asegurar UNIQUE en nombre_usuario aunque la tabla ya existía desde antes sin UNIQUE
+    // Asegurar UNIQUE en nombre_usuario 
     $pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS usuarios_nombre_usuario_uq ON usuarios(nombre_usuario);");
 
     // Insertar datos iniciales en `usuarios` sin error de ON CONFLICT
@@ -74,9 +66,7 @@ try {
     ON CONFLICT (nombre_usuario) DO NOTHING;";
     $pdo->exec($sql_insert_usuarios);
 
-    // =====================================================
-    // 2) TABLAS NUEVAS (estructura relacional, sin romper)
-    // =====================================================
+    // 2) TABLAS NUEVAS (estructura relacional)
 
     $pdo->exec("
     CREATE TABLE IF NOT EXISTS roles (
@@ -128,9 +118,7 @@ try {
 
     echo "✅ Tablas creadas / verificadas correctamente.<br>";
 
-    // =====================================================
-    // 3) DATOS DE SIMULACIÓN (solo si lecturas está vacía)
-    // =====================================================
+    // 3) DATOS DE SIMULACIÓN
 
     $count = (int)$pdo->query("SELECT COUNT(*) FROM lecturas;")->fetchColumn();
 
