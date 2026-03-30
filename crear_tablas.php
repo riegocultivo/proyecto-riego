@@ -29,7 +29,6 @@ try {
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
     // 1) TABLAS lecturas//
     
     // Crear tabla `lecturas` 
@@ -54,7 +53,6 @@ try {
     );";
     $pdo->exec($sql_usuarios);
 
-    
     // Asegurar UNIQUE en nombre_usuario 
     $pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS usuarios_nombre_usuario_uq ON usuarios(nombre_usuario);");
 
@@ -67,12 +65,6 @@ try {
     $pdo->exec($sql_insert_usuarios);
 
     // 2) TABLAS NUEVAS (estructura relacional)
-
-    $pdo->exec("
-    CREATE TABLE IF NOT EXISTS roles (
-        id SERIAL PRIMARY KEY,
-        nombre VARCHAR(50) UNIQUE NOT NULL
-    );");
 
     $pdo->exec("
     CREATE TABLE IF NOT EXISTS zonas (
