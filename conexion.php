@@ -1,15 +1,36 @@
+
 <?php
+
+// DATOS DE CONEXIÓN POSTGRESQL
 $host = 'dpg-dbphq6jrjlhs73fvij60-a';
+$port = '5432';
 $dbname = 'riego_3_q1vs';
 $user = 'riego_3';
-$password = 'ftynYIL7NNsyYRSsmMc2E0Kxrj6Vb1qb';
+
+// IMPORTANTE: coloca aquí la contraseña nueva de PostgreSQL
+$password = 'TU_NUEVA_CONTRASEÑA';
 
 try {
-    // Conexión con PDO para PostgreSQL
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-    // Establece el modo de errores a excepciones
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $pdo = new PDO(
+        "pgsql:host=$host;port=$port;dbname=$dbname",
+        $user,
+        $password,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
+    );
+
+    $pdo->exec("SET TIME ZONE 'America/La_Paz'");
+
+    // Compatibilidad con los dos nombres
+    $conn = $pdo;
+
 } catch (PDOException $e) {
-    echo "Error al conectar a la base de datos: " . $e->getMessage();
+
+    error_log("Error PostgreSQL: " . $e->getMessage());
+    die("Error al conectar con la base de datos.");
+
 }
 ?>
