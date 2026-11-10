@@ -1,8 +1,8 @@
 <?php
-$host = 'dpg-d6qo4rua2pns73a4sbo0-a';
-$dbname = 'riego_3';
+$host = 'dpg-dbphq6jrjlhs73fvij60-a';
+$dbname = 'riego_3_q1vs';
 $user = 'riego_3';
-$password = 'l85jgMNb8KAik0tECdnka9AcrjhGEgUH';
+$password = 'ftynYIL7NNsyYRSsmMc2E0Kxrj6Vb1qb';
 
 try {
     // Conexión con PDO para PostgreSQL
