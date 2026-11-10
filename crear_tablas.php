@@ -19,11 +19,11 @@ try {
         $password = $db['pass'] ?? '';
     } else {
         // Fallback local (si ejecutas en tu PC). AJUSTA si lo necesitas.   
-        $host = 'dpg-d6qo4rua2pns73a4sbo0-a';
+        $host = 'dpg-dbphq6jrjlhs73fvij60-a';
         $port = 5432;
-        $dbname = 'riego_3';
+        $dbname = 'riego_3_q1vs';
         $user = 'riego_3';
-        $password = 'l85jgMNb8KAik0tECdnka9AcrjhGEgUH';
+        $password = 'ftynYIL7NNsyYRSsmMc2E0Kxrj6Vb1qb';
     }
 
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
